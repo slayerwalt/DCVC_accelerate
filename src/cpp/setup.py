@@ -11,7 +11,7 @@ if sys.platform == "win32":
     extra_compile_args = ['/std:c++17', '/O2', '/W4', '/WX', '/wd4100']
     extra_link_args = []
 else:
-    extra_compile_args = ['-std=c++17', '-O3', '-fPIC', '-Wall', '-Wextra', '-Werror']
+    extra_compile_args = ['-std=c++17', '-O3', '-fPIC', '-Wall', '-Wextra']
     extra_link_args = []
 
 

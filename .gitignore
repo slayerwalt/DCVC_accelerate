@@ -7,3 +7,6 @@ build/
 *.tar
 *.pyd
 *.egg-info
+
+out_bin/
+src/cpp/setup.py
