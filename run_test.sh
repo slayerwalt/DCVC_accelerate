@@ -2,11 +2,11 @@ python test_video.py \
     --model_path_i ./checkpoints/cvpr2025_image.pth.tar \
     --model_path_p ./checkpoints/cvpr2025_video.pth.tar \
     --rate_num 4 \
-    --test_config ./configs/dataset_config_onlyHEVCB_Lab.json \
+    --test_config ./configs/dataset_config_onlyUVG.json \
     --cuda 1 -w 1 --write_stream 1 \
     --force_zero_thres 0.12 \
-    --output_path ./results/output_HEVC_B_GTX1080Ti.json \
-    --force_intra_period -1 \
+    --output_path ./results/output_UVG_RTX4090_intra_period_32.json \
+    --force_intra_period 32 \
     --reset_interval 64 \
     --force_frame_num -1 \
     --check_existing 0 \
