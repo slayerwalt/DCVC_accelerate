@@ -5,8 +5,8 @@ python test_video.py \
     --test_config ./configs/dataset_config_onlyUVG.json \
     --cuda 1 -w 1 --write_stream 1 \
     --force_zero_thres 0.12 \
-    --output_path ./results/output_UVG_RTX4090_intra_period_32.json \
-    --force_intra_period 32 \
+    --output_path ./results/output_UVG_RTX4090_intra_period_16.json \
+    --force_intra_period 16 \
     --reset_interval 64 \
     --force_frame_num -1 \
     --check_existing 0 \
