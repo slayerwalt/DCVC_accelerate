@@ -18,10 +18,12 @@ def convert_one_seq_to_png(src_path, width, height, dst_path):
 
 
 def main():
-    src_path = "source_yuv_path"
+    root_path = "/remote-home/shuwen/media/data/"
+    dataset = "HEVC_B/"
+    src_path = "BasketballDrive_1920x1080_50.yuv"
     width = 1920
     height = 1080
-    dst_path = "destination_png_path"
+    dst_path = "BasketballDrive_1920x1080_50/"
     convert_one_seq_to_png(src_path, width, height, dst_path)
 
 
