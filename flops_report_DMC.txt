@@ -1,0 +1,742 @@
+(dcvcrt) shuwen@workstation-GY57S62:~/NVC/DCVC_accelerate$ python dcvcrt_flops.py --model p
+================================================================================
+Profiling DMC (P-frame) Model
+Input shape: (1, 3, 1080, 1920)
+QP: 32
+================================================================================
+
+-------------------------- DeepSpeed Flops Profiler --------------------------
+Profile Summary at step 10:
+Notations:
+data parallel size (dp_size), model parallel size(mp_size),
+number of parameters (params), number of multiply-accumulate operations(MACs),
+number of floating-point operations (flops), floating-point operations per second (FLOPS),
+fwd latency (forward propagation latency), bwd latency (backward propagation latency),
+step (weights update latency), iter latency (sum of fwd, bwd and step latency)
+
+params per GPU:                                                         20.68 M 
+params of model = params per GPU * mp_size:                             0       
+fwd MACs per GPU:                                                       13 GMACs
+fwd flops per GPU:                                                      26.03 G 
+fwd flops of model = fwd flops per GPU * mp_size:                       26.03 G 
+fwd latency:                                                            120.3 ms
+fwd FLOPS per GPU = fwd flops per GPU / fwd latency:                    216.38 GFLOPS
+
+----------------------------- Aggregated Profile per GPU -----------------------------
+Top 10 modules in terms of params, MACs or fwd latency at different model depths:
+depth 0:
+    params      - {'DMCWrapper': '20.68 M'}
+    MACs        - {'DMCWrapper': '13 GMACs'}
+    fwd latency - {'DMCWrapper': '120.3 ms'}
+depth 1:
+    params      - {'DMC': '20.68 M'}
+    MACs        - {'DMC': '13 GMACs'}
+    fwd latency - {'DMC': '118.99 ms'}
+depth 2:
+    params      - {'PriorFusion': '3.71 M', 'ReconGeneration': '3.44 M', 'FeatureExtractor': '3.17 M', 'Decoder': '2.96 M', 'SpatialPrior': '2.67 M', 'Encoder': '2.05 M', 'ResidualBlockWithStride2': '791.04 K', 'DepthConvBlock': '578.05 K', 'HyperDecoder': '531.84 K', 'HyperEncoder': '531.07 K'}
+    MACs        - {'Encoder': '2.41 GMACs', 'Conv2d': '2.14 GMACs', 'ResidualBlockWithStride2': '2.14 GMACs', 'Decoder': '2.14 GMACs', 'ReconGeneration': '2.01 GMACs', 'PriorFusion': '1.2 GMACs', 'SpatialPrior': '802.16 MMACs', 'HyperEncoder': '167.12 MMACs', 'BitEstimator': '0 MACs', 'DepthConvBlock': '0 MACs'}
+    fwd latency - {'ReconGeneration': '30.98 ms', 'FeatureExtractor': '30.07 ms', 'Decoder': '18.84 ms', 'Encoder': '17.31 ms', 'PriorFusion': '8.73 ms', 'SpatialPrior': '6.21 ms', 'ResidualBlockWithStride2': '2.08 ms', 'HyperDecoder': '1.94 ms', 'HyperEncoder': '1.86 ms', 'Conv2d': '955.34 us'}
+depth 3:
+    params      - {'Sequential': '17.41 M', 'SubpelConv2x': '1.18 M', 'DepthConvBlock': '1.06 M', 'Conv2d': '783.68 K', 'Bitparm': '101.38 K'}
+    MACs        - {'Conv2d': '4.55 GMACs', 'Sequential': '2.17 GMACs', 'Bitparm': '0 MACs', 'DepthConvBlock': '0 MACs', 'SubpelConv2x': '0 MACs'}
+    fwd latency - {'Sequential': '105.31 ms', 'DepthConvBlock': '6.17 ms', 'SubpelConv2x': '2 ms', 'Conv2d': '1.45 ms', 'Bitparm': '0 s'}
+depth 4:
+    params      - {'DepthConvBlock': '15.84 M', 'Sequential': '2.24 M', 'Conv2d': '775.04 K', 'ResidualBlockUpsample': '398.59 K', 'ResidualBlockWithStride2': '397.82 K', 'WSiLU': '0', 'WSiLUChunkAdd': '0'}
+    MACs        - {'Conv2d': '2.01 GMACs', 'ResidualBlockWithStride2': '167.12 MMACs', 'WSiLU': '0 MACs', 'WSiLUChunkAdd': '0 MACs', 'DepthConvBlock': '0 MACs', 'Sequential': '0 MACs', 'ResidualBlockUpsample': '0 MACs'}
+    fwd latency - {'DepthConvBlock': '100.74 ms', 'ResidualBlockUpsample': '1.25 ms', 'ResidualBlockWithStride2': '1.17 ms', 'Conv2d': '962.5 us', 'WSiLU': '0 s', 'WSiLUChunkAdd': '0 s', 'Sequential': '0 s'}
+depth 5:
+    params      - {'Sequential': '15.31 M', 'Conv2d': '2.89 M', 'DepthConvBlock': '532.99 K', 'SubpelConv2x': '132.1 K', 'WSiLU': '0', 'WSiLUChunkAdd': '0', 'PixelShuffle': '0'}
+    MACs        - {'Conv2d': '167.12 MMACs', 'WSiLU': '0 MACs', 'Sequential': '0 MACs', 'WSiLUChunkAdd': '0 MACs', 'DepthConvBlock': '0 MACs', 'SubpelConv2x': '0 MACs', 'PixelShuffle': '0 MACs'}
+    fwd latency - {'DepthConvBlock': '1.4 ms', 'Conv2d': '387.19 us', 'SubpelConv2x': '261.07 us', 'WSiLU': '0 s', 'Sequential': '0 s', 'WSiLUChunkAdd': '0 s', 'PixelShuffle': '0 s'}
+depth 6:
+    params      - {'Conv2d': '15.31 M', 'Sequential': '665.09 K', 'WSiLU': '0', 'WSiLUChunkAdd': '0'}
+    MACs        - {'Conv2d': '0 MACs', 'WSiLU': '0 MACs', 'WSiLUChunkAdd': '0 MACs', 'Sequential': '0 MACs'}
+    fwd latency - {'Conv2d': '0 s', 'WSiLU': '0 s', 'WSiLUChunkAdd': '0 s', 'Sequential': '0 s'}
+depth 7:
+    params      - {'Conv2d': '665.09 K', 'WSiLU': '0', 'WSiLUChunkAdd': '0', 'PixelShuffle': '0'}
+    MACs        - {'WSiLU': '0 MACs', 'Conv2d': '0 MACs', 'WSiLUChunkAdd': '0 MACs', 'PixelShuffle': '0 MACs'}
+    fwd latency - {'WSiLU': '0 s', 'Conv2d': '0 s', 'WSiLUChunkAdd': '0 s', 'PixelShuffle': '0 s'}
+
+------------------------------ Detailed Profile per GPU ------------------------------
+Each module profile is listed after its name in the following order: 
+params, percentage of total params, MACs, percentage of total MACs, fwd latency, percentage of total fwd latency, fwd FLOPS
+
+Note: 1. A module can have torch.nn.module or torch.nn.functional to compute logits (e.g. CrossEntropyLoss). They are not counted as submodules, thus not to be printed out. However they make up the difference between a parent's MACs (or latency) and the sum of its submodules'.
+2. Number of floating-point operations is a theoretical estimation, thus FLOPS computed using that could be larger than the maximum system throughput.
+3. The fwd latency listed in the top module's profile is directly captured at the module forward function in PyTorch, thus it's less than the fwd latency shown above which is captured in DeepSpeed.
+
+DMCWrapper(
+  20.68 M = 100% Params, 13 GMACs = 100% MACs, 120.3 ms = 100% latency, 216.38 GFLOPS
+  (model): DMC(
+    20.68 M = 100% Params, 13 GMACs = 100% MACs, 118.99 ms = 98.91% latency, 218.75 GFLOPS
+    (bit_estimator_z): BitEstimator(
+      101.38 K = 0.49% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+      (f1): Bitparm(27.65 K = 0.13% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+      (f2): Bitparm(27.65 K = 0.13% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+      (f3): Bitparm(27.65 K = 0.13% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+      (f4): Bitparm(18.43 K = 0.09% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+    )
+    (feature_adaptor_i): DepthConvBlock(
+      578.05 K = 2.8% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+      (adaptor): Conv2d(49.41 K = 0.24% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 192, 256, kernel_size=(1, 1), stride=(1, 1))
+      (dc): Sequential(
+        134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+        (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+        (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+        (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (ffn): Sequential(
+        394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+        (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+        (1): WSiLUChunkAdd(
+          0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+          (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+        )
+        (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (feature_adaptor_p): Conv2d(65.79 K = 0.32% Params, 2.14 GMACs = 16.45% MACs, 955.34 us = 0.79% latency, 4.49 TFLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+    (feature_extractor): FeatureExtractor(
+      3.17 M = 15.34% Params, 0 MACs = 0% MACs, 30.07 ms = 25% latency, 277.87 MFLOPS
+      (conv1): Sequential(
+        1.06 M = 5.11% Params, 0 MACs = 0% MACs, 9.86 ms = 8.2% latency, 0 FLOPS
+        (0): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.88 ms = 4.06% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.86 ms = 4.04% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (conv2): Sequential(
+        2.11 M = 10.23% Params, 0 MACs = 0% MACs, 19.74 ms = 16.41% latency, 0 FLOPS
+        (0): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.86 ms = 4.04% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.91 ms = 4.08% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (2): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.88 ms = 4.06% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (3): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.86 ms = 4.04% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+    )
+    (encoder): Encoder(
+      2.05 M = 9.89% Params, 2.41 GMACs = 18.51% MACs, 17.31 ms = 14.39% latency, 278.04 GFLOPS
+      (conv1): Conv2d(49.41 K = 0.24% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 192, 256, kernel_size=(1, 1), stride=(1, 1))
+      (conv2): Sequential(
+        1.17 M = 5.67% Params, 0 MACs = 0% MACs, 11.13 ms = 9.25% latency, 0 FLOPS
+        (0): DepthConvBlock(
+          643.58 K = 3.11% Params, 0 MACs = 0% MACs, 6.16 ms = 5.12% latency, 0 FLOPS
+          (adaptor): Conv2d(114.94 K = 0.56% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.86 ms = 4.04% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (conv3): DepthConvBlock(
+        528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.85 ms = 4.03% latency, 0 FLOPS
+        (dc): Sequential(
+          134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+          (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+          (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+          (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (ffn): Sequential(
+          394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+          (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+          (1): WSiLUChunkAdd(
+            0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+          )
+          (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+      (down): Conv2d(295.04 K = 1.43% Params, 2.41 GMACs = 18.51% MACs, 792.03 us = 0.66% latency, 6.08 TFLOPS, 256, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    )
+    (hyper_encoder): HyperEncoder(
+      531.07 K = 2.57% Params, 167.12 MMACs = 1.29% MACs, 1.86 ms = 1.55% latency, 179.9 GFLOPS
+      (conv): Sequential(
+        531.07 K = 2.57% Params, 167.12 MMACs = 1.29% MACs, 1.81 ms = 1.51% latency, 184.4 GFLOPS
+        (0): DepthConvBlock(
+          133.25 K = 0.64% Params, 0 MACs = 0% MACs, 513.55 us = 0.43% latency, 0 FLOPS
+          (dc): Sequential(
+            34.3 K = 0.17% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(1.28 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+            (3): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            98.94 K = 0.48% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(32.9 K = 0.16% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): ResidualBlockWithStride2(
+          198.91 K = 0.96% Params, 133.69 MMACs = 1.03% MACs, 569.58 us = 0.47% latency, 469.9 GFLOPS
+          (down): Conv2d(65.66 K = 0.32% Params, 133.69 MMACs = 1.03% MACs, 195.03 us = 0.16% latency, 1.37 TFLOPS, 128, 128, kernel_size=(2, 2), stride=(2, 2))
+          (conv): DepthConvBlock(
+            133.25 K = 0.64% Params, 0 MACs = 0% MACs, 283 us = 0.24% latency, 0 FLOPS
+            (dc): Sequential(
+              34.3 K = 0.17% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+              (2): Conv2d(1.28 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (3): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (ffn): Sequential(
+              98.94 K = 0.48% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 512, kernel_size=(1, 1), stride=(1, 1))
+              (1): WSiLUChunkAdd(
+                0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+                (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+              )
+              (2): Conv2d(32.9 K = 0.16% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 128, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+        )
+        (2): ResidualBlockWithStride2(
+          198.91 K = 0.96% Params, 33.42 MMACs = 0.26% MACs, 604.63 us = 0.5% latency, 110.67 GFLOPS
+          (down): Conv2d(65.66 K = 0.32% Params, 33.42 MMACs = 0.26% MACs, 192.17 us = 0.16% latency, 348.2 GFLOPS, 128, 128, kernel_size=(2, 2), stride=(2, 2))
+          (conv): DepthConvBlock(
+            133.25 K = 0.64% Params, 0 MACs = 0% MACs, 295.4 us = 0.25% latency, 0 FLOPS
+            (dc): Sequential(
+              34.3 K = 0.17% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+              (2): Conv2d(1.28 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (3): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (ffn): Sequential(
+              98.94 K = 0.48% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 512, kernel_size=(1, 1), stride=(1, 1))
+              (1): WSiLUChunkAdd(
+                0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+                (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+              )
+              (2): Conv2d(32.9 K = 0.16% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 128, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+        )
+      )
+    )
+    (hyper_decoder): HyperDecoder(
+      531.84 K = 2.57% Params, 0 MACs = 0% MACs, 1.94 ms = 1.61% latency, 0 FLOPS
+      (conv): Sequential(
+        531.84 K = 2.57% Params, 0 MACs = 0% MACs, 1.9 ms = 1.58% latency, 0 FLOPS
+        (0): ResidualBlockUpsample(
+          199.3 K = 0.96% Params, 0 MACs = 0% MACs, 506.64 us = 0.42% latency, 0 FLOPS
+          (up): SubpelConv2x(
+            66.05 K = 0.32% Params, 0 MACs = 0% MACs, 128.27 us = 0.11% latency, 0 FLOPS
+            (conv): Sequential(
+              66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 512, kernel_size=(1, 1), stride=(1, 1))
+              (1): PixelShuffle(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, upscale_factor=2)
+            )
+          )
+          (conv): DepthConvBlock(
+            133.25 K = 0.64% Params, 0 MACs = 0% MACs, 283.24 us = 0.24% latency, 0 FLOPS
+            (dc): Sequential(
+              34.3 K = 0.17% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+              (2): Conv2d(1.28 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (3): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (ffn): Sequential(
+              98.94 K = 0.48% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 512, kernel_size=(1, 1), stride=(1, 1))
+              (1): WSiLUChunkAdd(
+                0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+                (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+              )
+              (2): Conv2d(32.9 K = 0.16% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 128, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+        )
+        (1): ResidualBlockUpsample(
+          199.3 K = 0.96% Params, 0 MACs = 0% MACs, 747.68 us = 0.62% latency, 0 FLOPS
+          (up): SubpelConv2x(
+            66.05 K = 0.32% Params, 0 MACs = 0% MACs, 132.8 us = 0.11% latency, 0 FLOPS
+            (conv): Sequential(
+              66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 512, kernel_size=(1, 1), stride=(1, 1))
+              (1): PixelShuffle(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, upscale_factor=2)
+            )
+          )
+          (conv): DepthConvBlock(
+            133.25 K = 0.64% Params, 0 MACs = 0% MACs, 535.25 us = 0.44% latency, 0 FLOPS
+            (dc): Sequential(
+              34.3 K = 0.17% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+              (2): Conv2d(1.28 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (3): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (ffn): Sequential(
+              98.94 K = 0.48% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (0): Conv2d(66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 512, kernel_size=(1, 1), stride=(1, 1))
+              (1): WSiLUChunkAdd(
+                0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+                (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+              )
+              (2): Conv2d(32.9 K = 0.16% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 128, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+        )
+        (2): DepthConvBlock(
+          133.25 K = 0.64% Params, 0 MACs = 0% MACs, 515.94 us = 0.43% latency, 0 FLOPS
+          (dc): Sequential(
+            34.3 K = 0.17% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(1.28 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+            (3): Conv2d(16.51 K = 0.08% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            98.94 K = 0.48% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(66.05 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(32.9 K = 0.16% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 128, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+    )
+    (temporal_prior_encoder): ResidualBlockWithStride2(
+      791.04 K = 3.83% Params, 2.14 GMACs = 16.45% MACs, 2.08 ms = 1.73% latency, 2.05 TFLOPS
+      (down): Conv2d(262.4 K = 1.27% Params, 2.14 GMACs = 16.45% MACs, 661.37 us = 0.55% latency, 6.47 TFLOPS, 256, 256, kernel_size=(2, 2), stride=(2, 2))
+      (conv): DepthConvBlock(
+        528.64 K = 2.56% Params, 0 MACs = 0% MACs, 1.32 ms = 1.1% latency, 0 FLOPS
+        (dc): Sequential(
+          134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+          (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+          (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+          (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (ffn): Sequential(
+          394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+          (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+          (1): WSiLUChunkAdd(
+            0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+          )
+          (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+        )
+      )
+    )
+    (y_prior_fusion): PriorFusion(
+      3.71 M = 17.93% Params, 1.2 GMACs = 9.25% MACs, 8.73 ms = 7.25% latency, 276.12 GFLOPS
+      (conv): Sequential(
+        3.71 M = 17.93% Params, 1.2 GMACs = 9.25% MACs, 8.66 ms = 7.19% latency, 278.4 GFLOPS
+        (0): DepthConvBlock(
+          1.19 M = 5.74% Params, 0 MACs = 0% MACs, 2.65 ms = 2.2% latency, 0 FLOPS
+          (dc): Sequential(
+            299.52 K = 1.45% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.84 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384)
+            (3): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            886.66 K = 4.29% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(591.36 K = 2.86% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 1536, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(295.3 K = 1.43% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 768, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): DepthConvBlock(
+          1.19 M = 5.74% Params, 0 MACs = 0% MACs, 2.64 ms = 2.19% latency, 0 FLOPS
+          (dc): Sequential(
+            299.52 K = 1.45% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.84 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384)
+            (3): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            886.66 K = 4.29% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(591.36 K = 2.86% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 1536, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(295.3 K = 1.43% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 768, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (2): DepthConvBlock(
+          1.19 M = 5.74% Params, 0 MACs = 0% MACs, 2.65 ms = 2.2% latency, 0 FLOPS
+          (dc): Sequential(
+            299.52 K = 1.45% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.84 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384)
+            (3): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            886.66 K = 4.29% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(591.36 K = 2.86% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 1536, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(295.3 K = 1.43% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 768, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (3): Conv2d(147.84 K = 0.72% Params, 1.2 GMACs = 9.25% MACs, 548.36 us = 0.46% latency, 4.39 TFLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (y_spatial_prior): SpatialPrior(
+      2.67 M = 12.9% Params, 802.16 MMACs = 6.17% MACs, 6.21 ms = 5.17% latency, 258.5 GFLOPS
+      (conv): Sequential(
+        2.67 M = 12.9% Params, 802.16 MMACs = 6.17% MACs, 6.17 ms = 5.13% latency, 260.54 GFLOPS
+        (0): DepthConvBlock(
+          1.38 M = 6.69% Params, 0 MACs = 0% MACs, 2.98 ms = 2.48% latency, 0 FLOPS
+          (adaptor): Conv2d(196.99 K = 0.95% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 384, kernel_size=(1, 1), stride=(1, 1))
+          (dc): Sequential(
+            299.52 K = 1.45% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.84 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384)
+            (3): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            886.66 K = 4.29% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(591.36 K = 2.86% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 1536, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(295.3 K = 1.43% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 768, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): DepthConvBlock(
+          1.19 M = 5.74% Params, 0 MACs = 0% MACs, 2.65 ms = 2.2% latency, 0 FLOPS
+          (dc): Sequential(
+            299.52 K = 1.45% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.84 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384)
+            (3): Conv2d(147.84 K = 0.72% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            886.66 K = 4.29% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(591.36 K = 2.86% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 384, 1536, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(295.3 K = 1.43% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 768, 384, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (2): Conv2d(98.56 K = 0.48% Params, 802.16 MMACs = 6.17% MACs, 414.13 us = 0.34% latency, 3.88 TFLOPS, 384, 256, kernel_size=(1, 1), stride=(1, 1))
+      )
+    )
+    (decoder): Decoder(
+      2.96 M = 14.33% Params, 2.14 GMACs = 16.45% MACs, 18.84 ms = 15.66% latency, 227.08 GFLOPS
+      (up): SubpelConv2x(
+        1.18 M = 5.71% Params, 0 MACs = 0% MACs, 2 ms = 1.66% latency, 0 FLOPS
+        (conv): Sequential(
+          1.18 M = 5.71% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+          (0): Conv2d(1.18 M = 5.71% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 128, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (1): PixelShuffle(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, upscale_factor=2)
+        )
+      )
+      (conv1): Sequential(
+        1.72 M = 8.31% Params, 0 MACs = 0% MACs, 16.1 ms = 13.38% latency, 0 FLOPS
+        (0): DepthConvBlock(
+          659.97 K = 3.19% Params, 0 MACs = 0% MACs, 6.4 ms = 5.32% latency, 0 FLOPS
+          (adaptor): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.79 ms = 3.99% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (2): DepthConvBlock(
+          528.64 K = 2.56% Params, 0 MACs = 0% MACs, 4.74 ms = 3.94% latency, 0 FLOPS
+          (dc): Sequential(
+            134.14 K = 0.65% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(2.56 K = 0.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            (3): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            394.5 K = 1.91% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(263.17 K = 1.27% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(131.33 K = 0.64% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 512, 256, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (conv2): Conv2d(65.79 K = 0.32% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 256, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (recon_generation_net): ReconGeneration(
+      3.44 M = 16.65% Params, 2.01 GMACs = 15.42% MACs, 30.98 ms = 25.75% latency, 129.46 GFLOPS
+      (conv): Sequential(
+        3.38 M = 16.35% Params, 0 MACs = 0% MACs, 29.95 ms = 24.89% latency, 0 FLOPS
+        (0): DepthConvBlock(
+          906.88 K = 4.39% Params, 0 MACs = 0% MACs, 7.84 ms = 6.52% latency, 0 FLOPS
+          (adaptor): Conv2d(82.24 K = 0.4% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 256, 320, kernel_size=(1, 1), stride=(1, 1))
+          (dc): Sequential(
+            208.64 K = 1.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(102.72 K = 0.5% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.2 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=320)
+            (3): Conv2d(102.72 K = 0.5% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            616 K = 2.98% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(410.88 K = 1.99% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 1280, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(205.12 K = 0.99% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 640, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (1): DepthConvBlock(
+          824.64 K = 3.99% Params, 0 MACs = 0% MACs, 7.36 ms = 6.11% latency, 0 FLOPS
+          (dc): Sequential(
+            208.64 K = 1.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(102.72 K = 0.5% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.2 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=320)
+            (3): Conv2d(102.72 K = 0.5% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            616 K = 2.98% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(410.88 K = 1.99% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 1280, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(205.12 K = 0.99% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 640, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (2): DepthConvBlock(
+          824.64 K = 3.99% Params, 0 MACs = 0% MACs, 7.36 ms = 6.11% latency, 0 FLOPS
+          (dc): Sequential(
+            208.64 K = 1.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(102.72 K = 0.5% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.2 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=320)
+            (3): Conv2d(102.72 K = 0.5% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            616 K = 2.98% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(410.88 K = 1.99% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 1280, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(205.12 K = 0.99% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 640, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (3): DepthConvBlock(
+          824.64 K = 3.99% Params, 0 MACs = 0% MACs, 7.39 ms = 6.15% latency, 0 FLOPS
+          (dc): Sequential(
+            208.64 K = 1.01% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(102.72 K = 0.5% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            (2): Conv2d(3.2 K = 0.02% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=320)
+            (3): Conv2d(102.72 K = 0.5% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+          (ffn): Sequential(
+            616 K = 2.98% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+            (0): Conv2d(410.88 K = 1.99% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 1280, kernel_size=(1, 1), stride=(1, 1))
+            (1): WSiLUChunkAdd(
+              0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS
+              (silu): WSiLU(0 = 0% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS)
+            )
+            (2): Conv2d(205.12 K = 0.99% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 640, 320, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+      )
+      (head): Conv2d(61.63 K = 0.3% Params, 0 MACs = 0% MACs, 0 s = 0% latency, 0 FLOPS, 320, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+------------------------------------------------------------------------------
+
+Total FLOPs: 26.03 G
+Total MACs: 13 GMACs
+Total Parameters: 20.68 M
+================================================================================
